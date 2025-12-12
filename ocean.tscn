@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://7touci43q7ro" path="res://scripts/ocean.gd" id="1_ihpsq"]
 [ext_resource type="Shader" uid="uid://bk4whtr8mq3je" path="res://ocean/water.gdshader" id="1_tiovm"]
-[ext_resource type="Script" uid="uid://d2y6786pe1yfv" path="res://scripts/camera.gd" id="2_j38dg"]
 [ext_resource type="Script" uid="uid://c473nc48xdr12" path="res://scripts/water_mesh_generator.gd" id="2_nb2vx"]
 [ext_resource type="PackedScene" uid="uid://dqnpqkqn8mkhv" path="res://ship.tscn" id="4_bwgqs"]
+[ext_resource type="PackedScene" uid="uid://b7xqg5m3rw8dt" path="res://player.tscn" id="5_player"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nb2vx"]
 sky_top_color = Color(0.2901961, 0.5647059, 0.78431374, 1)
@@ -39,10 +39,6 @@ shader_parameter/roughness = 0.1
 [node name="Ocean" type="Node3D"]
 script = ExtResource("1_ihpsq")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 5, 10)
-script = ExtResource("2_j38dg")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.8660254, 0.3535534, -0.3535534, 0, 0.7071068, 0.7071068, 0.5, -0.61237246, 0.61237246, 0, 8.456341, 0)
 shadow_enabled = true
@@ -50,10 +46,12 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nb2vx")
 
-[node name="WaterLOD" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+[node name="WaterLOD" type="Node3D" parent="."]
 script = ExtResource("2_nb2vx")
-target = NodePath("../Camera3D")
 water_material = SubResource("ShaderMaterial_nb2vx")
 
 [node name="Ship" parent="." instance=ExtResource("4_bwgqs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Player" parent="." instance=ExtResource("5_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
