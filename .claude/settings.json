@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Read(scripts/**)",
+      "Read(ocean/**)",
+      "Read(*.tscn)",
+      "Read(*.tres)",
+      "Read(project.godot)",
+      "Edit(scripts/**/*.gd)",
+      "Edit(ocean/**/*.gdshader)",
+      "Write(scripts/**/*.gd)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(del:*)",
+      "Edit(project.godot:config_version=*)",
+      "Write(.env*)",
+      "Write(secrets/**)"
+    ]
+  },
+  "env": {
+    "GODOT_VERSION": "4.5"
+  },
+  "companyAnnouncements": [
+    "Welcome to the Ship Ocean Simulation project!",
+    "This is a Godot 4.5 project with wave physics and ship buoyancy.",
+    "Key files: ocean.tscn (main scene), ship.tscn (ship), scripts/ (GDScript), ocean/ (shaders)",
+    "WaveCalculator is an autoload singleton accessible from any script."
+  ]
+}
