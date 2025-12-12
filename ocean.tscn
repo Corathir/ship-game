@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpjgpn35s7s84"]
+[gd_scene load_steps=10 format=3 uid="uid://cpjgpn35s7s84"]
 
+[ext_resource type="Script" uid="uid://7touci43q7ro" path="res://scripts/ocean.gd" id="1_ihpsq"]
 [ext_resource type="Shader" uid="uid://bk4whtr8mq3je" path="res://ocean/water.gdshader" id="1_tiovm"]
 [ext_resource type="Script" uid="uid://d2y6786pe1yfv" path="res://scripts/camera.gd" id="2_j38dg"]
 [ext_resource type="Script" uid="uid://c473nc48xdr12" path="res://scripts/water_mesh_generator.gd" id="2_nb2vx"]
@@ -36,6 +37,7 @@ shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.1
 
 [node name="Ocean" type="Node3D"]
+script = ExtResource("1_ihpsq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, 0, 5, 10)
