@@ -10,6 +10,9 @@ paths: ["**/*.tscn", "**/*.tres", "scripts/**/*.gd"]
 - **WaveCalculator** is a global autoload — single source of truth for wave heights. Access from any script.
 - **gerstner.glsl** — reference doc for canonical Gerstner formula. Must stay in sync with `water.gdshader` and `wave_calculator.gd`. `WaveCalculator._validate_shader_sync()` checks at runtime.
 - **DebugLogger** is a global autoload — context-aware logging. Use instead of `push_warning`/`push_error`/`print`.
+- **WorldMap** is a global autoload — sphere→plane projection. `world_to_latlong(pos)`, `get_latitude(pos)`.
+- **BiomeManager** is a global autoload — latitude→climate lookup (North/Temperate/Tropics).
+- **WeatherManager** is a global autoload — deterministic weather by coordinate. Drives `WaveCalculator` and `ocean.gd`.
 - **Water system**: procedural mesh generation via ArrayMesh with LOD rings
 - **Ship physics**: probe-based buoyancy (4 probes: FL, FR, BL, BR), not real fluid simulation
 - **Hybrid physics**: RigidBody3D for ship + AnimatableBody3D for walkable deck

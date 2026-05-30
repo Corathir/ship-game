@@ -22,6 +22,9 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 WaveCalculator="*res://ocean/wave_calculator.gd"
 DebugLogger="*res://system/debug_logger.gd"
+WorldMap="*res://world/world_map.gd"
+BiomeManager="*res://world/biome_manager.gd"
+WeatherManager="*res://world/weather_manager.gd"
 
 [input]
 

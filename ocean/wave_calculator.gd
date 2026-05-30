@@ -34,6 +34,8 @@ class WaveParams:
 
 var waves: Array[WaveParams] = []
 var _water_material: ShaderMaterial
+var _weather_scale: float = 1.0        # amplitude multiplier from WeatherManager
+var _weather_wind: Vector2 = Vector2(1.0, 0.0)  # wind direction bias from WeatherManager
 
 
 func _ready() -> void:
@@ -47,15 +49,15 @@ func _ready() -> void:
 func _build_default_waves() -> void:
     waves.clear()
     # Primary swell — long, slow, dominant direction
-    waves.append(WaveParams.new(Vector2(1.0, 0.3), 0.55, 40.0, 0.6))
-    waves.append(WaveParams.new(Vector2(0.8, 0.6), 0.35, 28.0, 0.55))
+    waves.append(WaveParams.new(Vector2(1.0, 0.3), 2.5, 40.0, 0.65))
+    waves.append(WaveParams.new(Vector2(0.8, 0.6), 1.5, 28.0, 0.6))
     # Secondary swell — crossing angle
-    waves.append(WaveParams.new(Vector2(0.3, 1.0), 0.25, 20.0, 0.5))
+    waves.append(WaveParams.new(Vector2(0.3, 1.0), 1.0, 20.0, 0.55))
     # Medium chop
-    waves.append(WaveParams.new(Vector2(-0.4, 0.9), 0.15, 12.0, 0.45))
-    waves.append(WaveParams.new(Vector2(0.7, -0.5), 0.10, 8.0, 0.4))
+    waves.append(WaveParams.new(Vector2(-0.4, 0.9), 0.6, 12.0, 0.5))
+    waves.append(WaveParams.new(Vector2(0.7, -0.5), 0.4, 8.0, 0.45))
     # Fine detail
-    waves.append(WaveParams.new(Vector2(-0.6, -0.8), 0.06, 5.0, 0.35))
+    waves.append(WaveParams.new(Vector2(-0.6, -0.8), 0.25, 5.0, 0.4))
     _sync_to_shader()
 
 
@@ -64,6 +66,16 @@ func set_waves(new_waves: Array[WaveParams]) -> void:
     if new_waves.size() > MAX_WAVES:
         DebugLogger.warn("WaveCalculator: wave set truncated to %d (MAX_WAVES)" % MAX_WAVES, self)
     waves = new_waves
+    _sync_to_shader()
+
+
+## Apply weather-driven scaling to wave amplitudes and wind direction bias.
+## Called each frame by WeatherManager.
+## intensity: 0..1 normalized wave intensity (scales amplitudes)
+## wind_dir: normalized wind direction (biases wave directions)
+func set_weather_scale(intensity: float, wind_dir: Vector2) -> void:
+    _weather_scale = intensity
+    _weather_wind = wind_dir
     _sync_to_shader()
 
 
@@ -122,9 +134,12 @@ func _sync_to_shader() -> void:
     for i in mini(waves.size(), MAX_WAVES):
         var w := waves[i]
         var idx := i * STRIDE
-        data[idx] = w.direction.x
-        data[idx + 1] = w.direction.y
-        data[idx + 2] = w.amplitude
+        # Blend wave direction with wind: 70% original + 30% wind bias
+        var blended_dir := (w.direction * 0.7 + _weather_wind * 0.3).normalized()
+        data[idx] = blended_dir.x
+        data[idx + 1] = blended_dir.y
+        # Scale amplitude by weather intensity
+        data[idx + 2] = w.amplitude * _weather_scale
         data[idx + 3] = w.steepness
         data[idx + 4] = w.k
         data[idx + 5] = w.omega

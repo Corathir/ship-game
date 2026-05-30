@@ -36,7 +36,7 @@ shader_parameter/metallic = 0.0
 shader_parameter/base_roughness = 0.05
 shader_parameter/foam_color = Color(0.85, 0.92, 0.97, 1)
 shader_parameter/foam_roughness = 0.8
-shader_parameter/foam_threshold = 0.0
+shader_parameter/foam_threshold = 0.9
 shader_parameter/use_normal_maps = false
 shader_parameter/normal_scale_1 = 0.04
 shader_parameter/normal_scale_2 = 0.018
@@ -68,4 +68,4 @@ water_material = SubResource("ShaderMaterial_nb2vx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Player" parent="." unique_id=930465274 instance=ExtResource("5_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)

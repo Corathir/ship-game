@@ -5,6 +5,7 @@ extends CharacterBody3D
 @export var move_speed := 15.0
 @export var jump_velocity := 4.5
 @export var mouse_sensitivity := 0.003
+@export var free_camera := true  # Disable physics, hover in place for observation
 
 # Camera pivot
 @onready var camera_pivot: Node3D = $CameraPivot
@@ -31,6 +32,9 @@ func _input(event: InputEvent) -> void:
             Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta: float) -> void:
+    if free_camera:
+        return
+
     # Apply gravity
     velocity.y -= gravity * delta
 

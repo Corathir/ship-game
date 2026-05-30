@@ -10,9 +10,9 @@ Maritime survival RPG: manage a sailing ship and crew on an infinite procedural 
 ship/
 ├── ocean.tscn              # Main scene
 ├── ocean/
-│   ├── ocean.gd            # Ocean scene controller
-│   ├── water.gdshader      # Water shader (includes gerstner.glsl)
-│   ├── gerstner.glsl       # Shared Gerstner wave formulas (GLSL)
+│   ├── ocean.gd            # Ocean scene controller (weather→env)
+│   ├── water.gdshader      # Water shader (inline Gerstner)
+│   ├── gerstner.glsl       # Gerstner wave reference doc
 │   ├── water_mesh_generator.gd  # Water mesh with LOD rings
 │   └── wave_calculator.gd  # Autoload: wave physics + shader sync
 ├── ship/
@@ -21,6 +21,11 @@ ship/
 ├── player/
 │   ├── player.gd           # CharacterBody3D player controller
 │   └── camera.gd           # Camera with debug FPS toggle
+├── world/
+│   ├── world_map.gd        # Autoload: sphere→lat/long projection
+│   ├── biome_data.gd       # BiomeData resource (climate, resources)
+│   ├── biome_manager.gd    # Autoload: latitude→climate lookup
+│   └── weather_manager.gd  # Autoload: deterministic weather by coord
 ├── system/
 │   └── debug_logger.gd     # Autoload: context-aware logging
 └── project.godot
@@ -28,10 +33,13 @@ ship/
 
 ## Core Components
 
-- **WaveCalculator** (`ocean/wave_calculator.gd`): Autoload singleton — single source of truth for wave physics. Feeds shader uniforms + provides CPU queries (`get_height`, `get_displacement`, `get_normal`, `get_foam`).
+- **WaveCalculator** (`ocean/wave_calculator.gd`): Autoload singleton — single source of truth for wave physics. Feeds shader uniforms + provides CPU queries (`get_height`, `get_displacement`, `get_normal`, `get_foam`). Weather-driven via `set_weather_scale()`.
 - **gerstner.glsl** (`ocean/gerstner.glsl`): Reference doc for canonical Gerstner formula. Both shader and GDScript must mirror this. `WaveCalculator._validate_shader_sync()` checks for drift at runtime.
 - **WaterLOD** (`ocean/water_mesh_generator.gd`): Procedural water mesh with LOD rings (ArrayMesh). `target` must be set to Ship node.
 - **Water Shader** (`ocean/water.gdshader`): Inline Gerstner vertex displacement + PBR, configurable via uniforms.
+- **WorldMap** (`world/world_map.gd`): Autoload singleton — sphere→plane projection. `world_to_latlong(pos)`, `get_latitude(pos)`.
+- **BiomeManager** (`world/biome_manager.gd`): Autoload singleton — latitude→climate lookup. North/Temperate/Tropics belts.
+- **WeatherManager** (`world/weather_manager.gd`): Autoload singleton — deterministic weather by coordinate. Drives `WaveCalculator` (wave intensity, wind) and `ocean.gd` (fog, sky tint).
 - **DebugLogger** (`system/debug_logger.gd`): Autoload singleton — context-aware logging that auto-detects caller scene/node/script.
 - **Ship** (RigidBody3D): Probe-based buoyancy (FL, FR, BL, BR). `linear_damp`: 2.0, `angular_damp`: 3.0.
 - **Deck** (AnimatableBody3D): Walkable surface synced with ship physics.
