@@ -20,7 +20,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 [autoload]
 
-WaveCalculator="*res://scripts/wave_calculator.gd"
+WaveCalculator="*res://ocean/wave_calculator.gd"
 
 [input]
 

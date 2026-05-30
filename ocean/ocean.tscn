@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cpjgpn35s7s84"]
 
-[ext_resource type="Script" uid="uid://7touci43q7ro" path="res://scripts/ocean.gd" id="1_ihpsq"]
+[ext_resource type="Script" uid="uid://7touci43q7ro" path="res://ocean/ocean.gd" id="1_ihpsq"]
 [ext_resource type="Shader" uid="uid://bk4whtr8mq3je" path="res://ocean/water.gdshader" id="1_tiovm"]
-[ext_resource type="Script" uid="uid://c473nc48xdr12" path="res://scripts/water_mesh_generator.gd" id="2_nb2vx"]
-[ext_resource type="PackedScene" uid="uid://dqnpqkqn8mkhv" path="res://ship.tscn" id="4_bwgqs"]
-[ext_resource type="PackedScene" uid="uid://b7xqg5m3rw8dt" path="res://player.tscn" id="5_player"]
+[ext_resource type="Script" uid="uid://c473nc48xdr12" path="res://ocean/water_mesh_generator.gd" id="2_nb2vx"]
+[ext_resource type="PackedScene" uid="uid://dqnpqkqn8mkhv" path="res://ship/ship.tscn" id="4_bwgqs"]
+[ext_resource type="PackedScene" uid="uid://b7xqg5m3rw8dt" path="res://player/player.tscn" id="5_player"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nb2vx"]
 sky_top_color = Color(0.2901961, 0.5647059, 0.78431374, 1)

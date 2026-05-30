@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dqnpqkqn8mkhv"]
 
-[ext_resource type="Script" uid="uid://c5wlmqgwgogc2" path="res://scripts/ship.gd" id="1_l3rv8"]
+[ext_resource type="Script" uid="uid://c5wlmqgwgogc2" path="res://ship/ship.gd" id="1_l3rv8"]
 
 [sub_resource type="StandardMaterial3D" id="mat_hull"]
 albedo_color = Color(0.45, 0.3, 0.15, 1)
