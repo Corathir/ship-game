@@ -3,4 +3,5 @@
 /android/
 
 # project ignores
-.idea
+.idea/
+.temporary/
