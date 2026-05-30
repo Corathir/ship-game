@@ -3,10 +3,14 @@ extends Node
 ## Single source of truth for wave parameters.
 ## Feeds identical Gerstner math to both the shader (via uniforms)
 ## and physics (via get_height / get_displacement / get_normal).
+##
+## Shader counterpart: ocean/gerstner.glsl (reference doc)
+## ocean/water.gdshader (vertex shader loop)
+## Any changes to the Gerstner formula MUST be mirrored in all three files.
 
 const GRAVITY := 9.81
-const MAX_WAVES := 8
-const STRIDE := 6
+const MAX_WAVES := 8   # Must match MAX_WAVES in water.gdshader and gerstner.glsl
+const STRIDE := 6      # Must match STRIDE in water.gdshader and gerstner.glsl
 
 
 class WaveParams:
@@ -57,6 +61,8 @@ func _build_default_waves() -> void:
 
 ## Replace entire wave set (e.g. for storm transitions).
 func set_waves(new_waves: Array[WaveParams]) -> void:
+    if new_waves.size() > MAX_WAVES:
+        DebugLogger.warn("WaveCalculator: wave set truncated to %d (MAX_WAVES)" % MAX_WAVES, self)
     waves = new_waves
     _sync_to_shader()
 
@@ -66,8 +72,43 @@ func set_waves(new_waves: Array[WaveParams]) -> void:
 # ============================================================================
 
 func register_material(mat: ShaderMaterial) -> void:
+    if not mat:
+        DebugLogger.error("WaveCalculator: register_material called with null", self)
+        return
     _water_material = mat
     _sync_to_shader()
+    _validate_shader_sync()
+
+
+## Verify shader constants match GDScript — catches drift between the three files.
+func _validate_shader_sync() -> void:
+    if not _water_material:
+        return
+
+    var shader: Shader = _water_material.shader
+    if not shader:
+        DebugLogger.warn("WaveCalculator: material has no shader, cannot validate sync", self)
+        return
+
+    var code: String = shader.code
+    if code.is_empty():
+        return
+
+    # Check that the shader's wave_data array size matches MAX_WAVES * STRIDE
+    var expected_size := MAX_WAVES * STRIDE
+    var regex := RegEx.new()
+    regex.compile("uniform\\s+float\\s+wave_data\\[(\\d+)\\]")
+    var result := regex.search(code)
+    if result:
+        var shader_size := int(result.get_string(1))
+        if shader_size != expected_size:
+            DebugLogger.error(
+                "WaveCalculator: shader wave_data[%d] != GDScript MAX_WAVES*STRIDE=%d. "
+                % [shader_size, expected_size] + "Update water.gdshader or wave_calculator.gd to match.",
+                self
+            )
+    else:
+        DebugLogger.debug("WaveCalculator: could not find wave_data uniform in shader code", self)
 
 
 func _sync_to_shader() -> void:
@@ -93,7 +134,7 @@ func _sync_to_shader() -> void:
 
 
 # ============================================================================
-# PHYSICS QUERIES — same math as shader vertex()
+# PHYSICS QUERIES — same math as gerstner.glsl gerstner_evaluate()
 # ============================================================================
 
 func _get_time() -> float:
@@ -102,6 +143,7 @@ func _get_time() -> float:
 
 ## Full 3D Gerstner displacement at world position (x, z).
 ## Returns Vector3 offset to add to the undisplaced position.
+## Mirrors: gerstner.glsl → r.displacement, water.gdshader vertex loop
 func get_displacement(x: float, z: float) -> Vector3:
     var t := _get_time()
     var disp := Vector3.ZERO
@@ -121,13 +163,21 @@ func get_displacement(x: float, z: float) -> Vector3:
 
 
 ## Water surface height at world position (x, z).
-## Y component of the Gerstner displacement.
+## Y component of the Gerstner displacement — optimized (skips X/Z).
+## Mirrors: gerstner.glsl → r.displacement.y, water.gdshader vertex loop
 func get_height(x: float, z: float) -> float:
-    return get_displacement(x, z).y
+    var t := _get_time()
+    var height := 0.0
+
+    for w in waves:
+        var phase := w.k * (w.direction.x * x + w.direction.y * z) + w.omega * t
+        height += w.amplitude * cos(phase)
+
+    return height
 
 
 ## Analytical surface normal at world position (x, z).
-## Same formula as the shader vertex normal.
+## Same formula as gerstner.glsl → r.normal, water.gdshader vertex loop
 func get_normal(x: float, z: float) -> Vector3:
     var t := _get_time()
     var nx := 0.0
@@ -160,7 +210,8 @@ func get_surface_point(x: float, z: float) -> Vector3:
 
 ## Foam intensity at world position (x, z).
 ## Based on Jacobian — 0 = no foam, 1 = max foam.
-func get_foam(x: float, z: float) -> float:
+## Mirrors: gerstner.glsl → r.jacobian, water.gdshader foam formula
+func get_foam(x: float, z: float, threshold: float = 0.0) -> float:
     var t := _get_time()
     # J = 1 - Σ Q · k · A · cos(θ)
     var jacobian := 1.0
@@ -170,4 +221,4 @@ func get_foam(x: float, z: float) -> float:
         var c := cos(phase)
         jacobian -= w.steepness * w.k * w.amplitude * c
 
-    return clampf(-jacobian, 0.0, 1.0)
+    return clampf(-jacobian + threshold, 0.0, 1.0)

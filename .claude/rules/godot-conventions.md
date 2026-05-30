@@ -6,8 +6,10 @@ paths: ["**/*.tscn", "**/*.tres", "scripts/**/*.gd"]
 
 ## Architecture
 
-- **Forward Plus renderer** (Godot 4.5)
+- **Forward Plus renderer** (Godot 4.6)
 - **WaveCalculator** is a global autoload — single source of truth for wave heights. Access from any script.
+- **gerstner.glsl** — reference doc for canonical Gerstner formula. Must stay in sync with `water.gdshader` and `wave_calculator.gd`. `WaveCalculator._validate_shader_sync()` checks at runtime.
+- **DebugLogger** is a global autoload — context-aware logging. Use instead of `push_warning`/`push_error`/`print`.
 - **Water system**: procedural mesh generation via ArrayMesh with LOD rings
 - **Ship physics**: probe-based buoyancy (4 probes: FL, FR, BL, BR), not real fluid simulation
 - **Hybrid physics**: RigidBody3D for ship + AnimatableBody3D for walkable deck

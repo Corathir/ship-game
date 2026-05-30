@@ -32,8 +32,6 @@ func _process(_delta: float) -> void:
 func _create_ring(size: float, resolution: int, inner_size: float) -> ArrayMesh:
     var mesh := ArrayMesh.new()
     var vertices := PackedVector3Array()
-    var normals := PackedVector3Array()
-    var uvs := PackedVector2Array()
     var indices := PackedInt32Array()
     
     var half := size / 2.0
@@ -48,8 +46,6 @@ func _create_ring(size: float, resolution: int, inner_size: float) -> ArrayMesh:
                 -half + z * step
             )
             vertices.append(pos)
-            normals.append(Vector3.UP)
-            uvs.append(Vector2(float(x) / resolution, float(z) / resolution))
     
     for z in range(resolution):
         for x in range(resolution):
@@ -71,8 +67,6 @@ func _create_ring(size: float, resolution: int, inner_size: float) -> ArrayMesh:
     var arrays := []
     arrays.resize(Mesh.ARRAY_MAX)
     arrays[Mesh.ARRAY_VERTEX] = vertices
-    arrays[Mesh.ARRAY_NORMAL] = normals
-    arrays[Mesh.ARRAY_TEX_UV] = uvs
     arrays[Mesh.ARRAY_INDEX] = indices
     
     mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)

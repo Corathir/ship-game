@@ -8,4 +8,4 @@ func _ready() -> void:
 	if mat:
 		WaveCalculator.register_material(mat)
 	else:
-		push_warning("Ocean: water_material not set on WaterLOD")
+		DebugLogger.warn("Ocean: water_material not set on WaterLOD", self)

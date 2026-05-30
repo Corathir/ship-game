@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cbc4cibdjm00c"
+path="res://.godot/imported/gerstner.glsl-eba6777add9ea810fee5c1aa14a9ace7.res"
+
+[deps]
+
+source_file="res://ocean/gerstner.glsl"
+dest_files=["res://.godot/imported/gerstner.glsl-eba6777add9ea810fee5c1aa14a9ace7.res"]
+
+[params]
+

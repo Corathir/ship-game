@@ -61,6 +61,7 @@ environment = SubResource("Environment_nb2vx")
 
 [node name="WaterLOD" type="Node3D" parent="." unique_id=151842551]
 script = ExtResource("2_nb2vx")
+target = NodePath("../Ship")
 water_material = SubResource("ShaderMaterial_nb2vx")
 
 [node name="Ship" parent="." unique_id=2140700481 instance=ExtResource("4_bwgqs")]
