@@ -25,11 +25,5 @@
   },
   "env": {
     "GODOT_VERSION": "4.5"
-  },
-  "companyAnnouncements": [
-    "Welcome to the Ship Ocean Simulation project!",
-    "This is a Godot 4.5 project with wave physics and ship buoyancy.",
-    "Key files: ocean.tscn (main scene), ship.tscn (ship), scripts/ (GDScript), ocean/ (shaders)",
-    "WaveCalculator is an autoload singleton accessible from any script."
-  ]
+  }
 }
