@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpjgpn35s7s84"]
+[gd_scene format=3 uid="uid://cpjgpn35s7s84"]
 
 [ext_resource type="Script" uid="uid://7touci43q7ro" path="res://scripts/ocean.gd" id="1_ihpsq"]
 [ext_resource type="Shader" uid="uid://bk4whtr8mq3je" path="res://ocean/water.gdshader" id="1_tiovm"]
@@ -26,32 +26,45 @@ fog_density = 0.003
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nb2vx"]
 render_priority = 0
 shader = ExtResource("1_tiovm")
-shader_parameter/amplitude1 = 0.5
-shader_parameter/amplitude2 = 0.3
-shader_parameter/frequency1 = 0.5
-shader_parameter/frequency2 = 0.8
-shader_parameter/speed = 1.0
+shader_parameter/wave_count = 6
+shader_parameter/wave_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/color_deep = Color(0, 0.1, 0.2, 1)
 shader_parameter/color_surface = Color(0, 0.4, 0.5, 1)
+shader_parameter/color_sss = Color(0.05, 0.55, 0.45, 1)
+shader_parameter/sss_strength = 0.25
 shader_parameter/metallic = 0.0
-shader_parameter/roughness = 0.1
+shader_parameter/base_roughness = 0.05
+shader_parameter/foam_color = Color(0.85, 0.92, 0.97, 1)
+shader_parameter/foam_roughness = 0.8
+shader_parameter/foam_threshold = 0.0
+shader_parameter/use_normal_maps = false
+shader_parameter/normal_scale_1 = 0.04
+shader_parameter/normal_scale_2 = 0.018
+shader_parameter/normal_dir_1 = Vector2(1, 0.3)
+shader_parameter/normal_dir_2 = Vector2(-0.4, 1)
+shader_parameter/normal_speed_1 = 0.02
+shader_parameter/normal_speed_2 = 0.013
+shader_parameter/normal_strength = 0.3
+shader_parameter/use_refraction = false
+shader_parameter/refraction_strength = 0.06
+shader_parameter/depth_fade_distance = 8.0
 
-[node name="Ocean" type="Node3D"]
+[node name="Ocean" type="Node3D" unique_id=72379734]
 script = ExtResource("1_ihpsq")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1597312546]
 transform = Transform3D(0.8660254, 0.3535534, -0.3535534, 0, 0.7071068, 0.7071068, 0.5, -0.61237246, 0.61237246, 0, 8.456341, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1295521510]
 environment = SubResource("Environment_nb2vx")
 
-[node name="WaterLOD" type="Node3D" parent="."]
+[node name="WaterLOD" type="Node3D" parent="." unique_id=151842551]
 script = ExtResource("2_nb2vx")
 water_material = SubResource("ShaderMaterial_nb2vx")
 
-[node name="Ship" parent="." instance=ExtResource("4_bwgqs")]
+[node name="Ship" parent="." unique_id=2140700481 instance=ExtResource("4_bwgqs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Player" parent="." instance=ExtResource("5_player")]
+[node name="Player" parent="." unique_id=930465274 instance=ExtResource("5_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
