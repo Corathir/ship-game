@@ -1,115 +1,41 @@
-[gd_scene format=3 uid="uid://dqnpqkqn8mkhv"]
+[gd_scene format=3 uid="uid://d2hdhq558lw8f"]
 
 [ext_resource type="Script" uid="uid://c5wlmqgwgogc2" path="res://ship/ship.gd" id="1_l3rv8"]
+[ext_resource type="PackedScene" uid="uid://c1tasic64ecev" path="res://ship/ship_hull.tscn" id="2_2jgil"]
 
-[sub_resource type="StandardMaterial3D" id="mat_hull"]
-albedo_color = Color(0.45, 0.3, 0.15, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_hull"]
+size = Vector3(11.174988, 8.637684, 42.948288)
 
-[sub_resource type="BoxMesh" id="mesh_deck"]
-material = SubResource("mat_hull")
-size = Vector3(3.6, 0.2, 7)
-
-[sub_resource type="BoxMesh" id="mesh_wall"]
-material = SubResource("mat_hull")
-size = Vector3(0.2, 1.3, 7)
-
-[sub_resource type="BoxMesh" id="mesh_stern"]
-material = SubResource("mat_hull")
-size = Vector3(3.6, 1.3, 0.2)
-
-[sub_resource type="BoxMesh" id="mesh_bow"]
-material = SubResource("mat_hull")
-size = Vector3(0.2, 1.1, 2.691)
-
-[sub_resource type="BoxMesh" id="mesh_hull_bottom"]
-material = SubResource("mat_hull")
-size = Vector3(2.4, 0.8, 6)
-
-[sub_resource type="BoxShape3D" id="shape_deck"]
-size = Vector3(3.6, 0.2, 9.392578)
-
-[sub_resource type="BoxShape3D" id="shape_wall"]
-size = Vector3(0.2, 1.3, 7)
-
-[sub_resource type="BoxShape3D" id="shape_stern"]
-size = Vector3(3.6, 1.3, 0.2)
-
-[sub_resource type="BoxShape3D" id="shape_bow"]
-size = Vector3(0.2, 1.1, 2.691)
-
-[node name="Ship" type="Node3D" unique_id=1822359475]
+[node name="Ship" type="Node3D" unique_id=682212706]
 script = ExtResource("1_l3rv8")
+float_force = 35.0
 
-[node name="Boat" type="RigidBody3D" parent="." unique_id=78226642]
-mass = 3.0
+[node name="Boat" type="RigidBody3D" parent="." unique_id=1547160565]
+collision_layer = 4
+mass = 500.0
 linear_damp = 2.0
-angular_damp = 3.0
+angular_damp = 5.0
 
-[node name="Deck" type="MeshInstance3D" parent="Boat" unique_id=1136224183]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, -0.9, 0)
-mesh = SubResource("mesh_deck")
+[node name="ShipHull" parent="Boat" unique_id=165892715 instance=ExtResource("2_2jgil")]
 
-[node name="WallLeft" type="MeshInstance3D" parent="Boat" unique_id=2050661214]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, -0.15, -0.5)
-mesh = SubResource("mesh_wall")
+[node name="HullCollision" type="CollisionShape3D" parent="Boat" unique_id=915394101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0112028, -6.9157314, 1.9012222)
+shape = SubResource("BoxShape3D_hull")
 
-[node name="WallRight" type="MeshInstance3D" parent="Boat" unique_id=1866773455]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.15, -0.5)
-mesh = SubResource("mesh_wall")
+[node name="ProbeContainer" type="Node3D" parent="Boat" unique_id=950621572]
 
-[node name="Stern" type="MeshInstance3D" parent="Boat" unique_id=606683946]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -4.1)
-mesh = SubResource("mesh_stern")
+[node name="FrontRight" type="Marker3D" parent="Boat/ProbeContainer" unique_id=613513205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.987231, -3.945141, 19.342638)
+gizmo_extents = 1.0
 
-[node name="BowLeft" type="MeshInstance3D" parent="Boat" unique_id=1762625999]
-transform = Transform3D(0.7431448, 0, 0.6691306, 0, 1, 0, -0.6691306, 0, 0.7431448, -0.9, -0.25, 4)
-mesh = SubResource("mesh_bow")
+[node name="FrontLeft" type="Marker3D" parent="Boat/ProbeContainer" unique_id=1458151709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7075546, -4.0955, 19.209017)
+gizmo_extents = 1.0
 
-[node name="BowRight" type="MeshInstance3D" parent="Boat" unique_id=413052718]
-transform = Transform3D(0.7431448, 0, -0.6691306, 0, 1, 0, 0.6691306, 0, 0.7431448, 0.9, -0.25, 4)
-mesh = SubResource("mesh_bow")
+[node name="BackRight" type="Marker3D" parent="Boat/ProbeContainer" unique_id=694683282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6496315, -4.2102637, -17.156303)
+gizmo_extents = 1.0
 
-[node name="HullBottom" type="MeshInstance3D" parent="Boat" unique_id=397262738]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4, -0.5)
-mesh = SubResource("mesh_hull_bottom")
-
-[node name="CollisionDeck" type="CollisionShape3D" parent="Boat" unique_id=1280025987]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.69628906)
-shape = SubResource("shape_deck")
-
-[node name="CollisionWallLeft" type="CollisionShape3D" parent="Boat" unique_id=1453478374]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, -0.15, -0.5)
-shape = SubResource("shape_wall")
-
-[node name="CollisionWallRight" type="CollisionShape3D" parent="Boat" unique_id=501048440]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.15, -0.5)
-shape = SubResource("shape_wall")
-
-[node name="CollisionStern" type="CollisionShape3D" parent="Boat" unique_id=48305155]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -4.1)
-shape = SubResource("shape_stern")
-
-[node name="CollisionBowLeft" type="CollisionShape3D" parent="Boat" unique_id=1135381842]
-transform = Transform3D(0.7431448, 0, 0.6691306, 0, 1, 0, -0.6691306, 0, 0.7431448, -0.9, -0.25, 4)
-shape = SubResource("shape_bow")
-
-[node name="CollisionBowRight" type="CollisionShape3D" parent="Boat" unique_id=700904451]
-transform = Transform3D(0.7431448, 0, -0.6691306, 0, 1, 0, 0.6691306, 0, 0.7431448, 0.9, -0.25, 4)
-shape = SubResource("shape_bow")
-
-[node name="ProbeContainer" type="Node3D" parent="Boat" unique_id=466073512]
-
-[node name="ProbeSternL" type="Marker3D" parent="Boat/ProbeContainer" unique_id=139931178]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -1, -3.5)
-
-[node name="ProbeSternR" type="Marker3D" parent="Boat/ProbeContainer" unique_id=374698978]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1, -3.5)
-
-[node name="ProbeBowL" type="Marker3D" parent="Boat/ProbeContainer" unique_id=1489620107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, -1, 2.5)
-
-[node name="ProbeBowR" type="Marker3D" parent="Boat/ProbeContainer" unique_id=1301856240]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -1, 2.5)
-
-[node name="ProbeBowTip" type="Marker3D" parent="Boat/ProbeContainer" unique_id=1122933968]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 4.5)
+[node name="BackLeft" type="Marker3D" parent="Boat/ProbeContainer" unique_id=747223023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6216345, -4.011264, -17.20829)
+gizmo_extents = 1.0

@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bgdrkc7u56pqg"]
+
+[ext_resource type="Texture2D" uid="uid://d3xv3546fw5m0" path="res://ship/textures/StylShip_ShipHull_AlbedoTransparency.png" id="1_k0e2c"]
+[ext_resource type="Texture2D" uid="uid://dvtlthp2vlod4" path="res://ship/textures/StylShip_ShipHull_AmbientOcclusion.png" id="2_f3vpy"]
+[ext_resource type="Texture2D" uid="uid://betmrfybj84al" path="res://ship/textures/StylShip_ShipHull_MetallicSmoothness.png" id="3_mw8r1"]
+[ext_resource type="Texture2D" uid="uid://c1u0bnltvkiv7" path="res://ship/textures/StylShip_ShipHull_NormalOpenGL.png" id="4_nkkqh"]
+[ext_resource type="Texture2D" uid="uid://dt8khyvx1fblb" path="res://ship/textures/StylShip_ShipHull_Roughness.png" id="5_slovg"]
+
+[resource]
+resource_name = "Mat_StylShip_ShipHull"
+albedo_texture = ExtResource("1_k0e2c")
+metallic = 1.0
+metallic_texture = ExtResource("3_mw8r1")
+roughness_texture = ExtResource("5_slovg")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("4_nkkqh")
+ao_enabled = true
+ao_texture = ExtResource("2_f3vpy")

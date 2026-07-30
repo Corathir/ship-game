@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://6pufpm4l2vbe"]
+
+[ext_resource type="Texture2D" uid="uid://dj1u3xsafq2hr" path="res://ship/textures/StylShip_Masts_AlbedoTransparency.png" id="1_02ufi"]
+[ext_resource type="Texture2D" uid="uid://1gay4o7l2q0v" path="res://ship/textures/StylShip_Masts_AmbientOcclusion.png" id="2_dnnes"]
+[ext_resource type="Texture2D" uid="uid://ccntypux7dh34" path="res://ship/textures/StylShip_Masts_MetallicSmoothness.png" id="3_ewd7o"]
+[ext_resource type="Texture2D" uid="uid://dp8kp1xwc73ru" path="res://ship/textures/StylShip_Masts_NormalOpenGL.png" id="4_n2vhq"]
+[ext_resource type="Texture2D" uid="uid://ri6winh6kwuw" path="res://ship/textures/StylShip_Masts_Roughness.png" id="5_h0020"]
+
+[resource]
+resource_name = "Mat_StylShip_Masts"
+albedo_texture = ExtResource("1_02ufi")
+metallic = 1.0
+metallic_texture = ExtResource("3_ewd7o")
+roughness_texture = ExtResource("5_h0020")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("4_n2vhq")
+ao_enabled = true
+ao_texture = ExtResource("2_dnnes")

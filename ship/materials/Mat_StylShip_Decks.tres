@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://boi2lim8agwn1"]
+
+[ext_resource type="Texture2D" uid="uid://dotjruuoaryf1" path="res://ship/textures/StylShip_Decks_AlbedoTransparency.png" id="1_m2hs2"]
+[ext_resource type="Texture2D" uid="uid://bain6cc7pmf6l" path="res://ship/textures/StylShip_Decks_AmbientOcclusion.png" id="2_gmd0h"]
+[ext_resource type="Texture2D" uid="uid://dmew2tgrtw2kq" path="res://ship/textures/StylShip_Decks_MetallicSmoothness.png" id="3_2epje"]
+[ext_resource type="Texture2D" uid="uid://cmicinb8hiykd" path="res://ship/textures/StylShip_Decks_NormalOpenGL.png" id="4_xqmll"]
+[ext_resource type="Texture2D" uid="uid://dmbsfhs1bi7l4" path="res://ship/textures/StylShip_Decks_Roughness.png" id="5_lcr0d"]
+
+[resource]
+resource_name = "Mat_StylShip_Decks"
+albedo_texture = ExtResource("1_m2hs2")
+metallic = 1.0
+metallic_texture = ExtResource("3_2epje")
+roughness_texture = ExtResource("5_lcr0d")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("4_xqmll")
+ao_enabled = true
+ao_texture = ExtResource("2_gmd0h")

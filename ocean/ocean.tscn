@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://7touci43q7ro" path="res://ocean/ocean.gd" id="1_ihpsq"]
 [ext_resource type="Shader" uid="uid://bk4whtr8mq3je" path="res://ocean/water.gdshader" id="1_tiovm"]
 [ext_resource type="Script" uid="uid://c473nc48xdr12" path="res://ocean/water_mesh_generator.gd" id="2_nb2vx"]
-[ext_resource type="PackedScene" uid="uid://dqnpqkqn8mkhv" path="res://ship/ship.tscn" id="4_bwgqs"]
+[ext_resource type="PackedScene" uid="uid://d2hdhq558lw8f" path="res://ship/ship.tscn" id="4_bwgqs"]
 [ext_resource type="PackedScene" uid="uid://b7xqg5m3rw8dt" path="res://player/player.tscn" id="5_player"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nb2vx"]
@@ -65,7 +65,7 @@ target = NodePath("../Ship")
 water_material = SubResource("ShaderMaterial_nb2vx")
 
 [node name="Ship" parent="." unique_id=2140700481 instance=ExtResource("4_bwgqs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.6437054, 0)
 
 [node name="Player" parent="." unique_id=930465274 instance=ExtResource("5_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
